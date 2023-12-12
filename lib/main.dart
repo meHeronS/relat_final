@@ -226,17 +226,19 @@ class _HomeScreenState extends State<HomeScreen> {
                         ListTile(
                           title: Text(s),
                           onTap: () {
-                            onTapNota(context, s, db);                          },
-                          trailing: IconButton(
+                            onTapNota(context, s, db);
+                            },
+                            trailing: IconButton(
                             onPressed: () {
                               excludeLastNotas();
-                            },
+                              },
                             icon: const Icon(Icons.delete),
                           ),
                         ),
                     ],
                   ),
-                ]),
+                ]
+            ),
           ),
         ));
   }
@@ -441,10 +443,18 @@ class _HomeScreenState extends State<HomeScreen> {
               },
               child: const Text('Salvar'),
             ),
+            TextButton(
+              onPressed: () async {
+                // Salvar as alterações no banco de dados
+                await db.collection("Notas").doc(_notaId).delete();
+
+                Navigator.of(context).pop(); // Fechar o diálogo de edição
+              },
+              child: const Text('Delete'),
+            ),
           ],
         );
       },
     );
   }
-
 }
